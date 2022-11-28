@@ -1,0 +1,175 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form [formGroup]="scrapeUrlForm" (ngSubmit)="onSubmit(scrapeUrlForm)">
+                <div class="form-group row">
+                <label for="scrapeUrl" class="col-md-2 col-form-label">Url</label>
+                <div class="col-md-8">
+                    <input type="text" formControlName="scrapeUrl" class="form-control" id="scrapeUrl">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary" [disabled]="loading">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading">&nbsp;</span>
+                        <span *ngIf="loading">Loading...</span>
+                        <span *ngIf="!loading">Submit</span>
+                    </button>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <ng-container *ngIf="data">
+        <hr>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Title</label>
+            </div>
+            <div class="col-md-10">
+                <label>{{ data.title }}</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Description</label>
+            </div>
+            <div class="col-md-10">
+                <label [innerHTML]="data.description"></label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Category ID</label>
+            </div>
+            <div class="col-md-10">
+                <label>{{ data.categoryId }}</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Product ID</label>
+            </div>
+            <div class="col-md-10">
+                <label>{{ data.productId }}</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Store Info</label>
+            </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-3"><label>Name</label></div>
+                    <div class="col-md-9"><label>{{ data.store.name }}</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label>Store Number</label></div>
+                    <div class="col-md-9"><label>{{ data.store.storeNumber }}</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label>Company Id</label></div>
+                    <div class="col-md-9"><label>{{ data.store.companyId }}</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label>Positive Rating</label></div>
+                    <div class="col-md-9"><label>{{ data.store.positiveRating }}</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label>Positive Rating</label></div>
+                    <div class="col-md-9"><label>{{ data.store.positiveRating }}</label></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Specifications</label>
+            </div>
+            <div class="col-md-10">
+                <div class="row" *ngFor="let s of data.specs">
+                    <div class="col-md-3"><label>{{ s.attrName }}</label></div>
+                    <div class="col-md-9"><label>{{ s.attrValue }}</label></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Quantity</label>
+            </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-3"><label>Total Available</label></div>
+                    <div class="col-md-9"><label>{{ data.quantity.totalAvailable}}</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label>Total Traded</label></div>
+                    <div class="col-md-9"><label>{{ data.quantity.tradeCount}}</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label>Minimum Bulk Order</label></div>
+                    <div class="col-md-9"><label>{{ data.quantity.minimumBulkOrder }} {{ data.quantity.bulkOrderUnit }}</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label>Bulk Order Discount</label></div>
+                    <div class="col-md-9"><label>{{ data.quantity.bulkOrderDiscount}} %</label></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Price</label>
+            </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-3"><label>Listing Price</label></div>
+                    <div class="col-md-9"><label>{{ data.currency }} {{ data.listingPrice.min}} - {{ data.listingPrice.max }}</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label>Selling Price</label></div>
+                    <div class="col-md-9"><label>{{ data.currency }} {{ data.sellingPrice.min}} - {{ data.sellingPrice.max }}</label></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Images</label>
+            </div>
+            <div class="col-md-10">
+                <angular-image-slider [images]="data.images"></angular-image-slider>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Ratings (out of {{ data.rating.max }})</label>
+            </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-3"><label>Average</label></div>
+                    <div class="col-md-9"><label>{{ data.rating.average }}</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label>5 star</label></div>
+                    <div class="col-md-9"><label>{{ data.rating.fiveStarCount }}</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label>4 star</label></div>
+                    <div class="col-md-9"><label>{{ data.rating.fourStarCount }}</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label>3 star</label></div>
+                    <div class="col-md-9"><label>{{ data.rating.threeStarCount }}</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label>2 star</label></div>
+                    <div class="col-md-9"><label>{{ data.rating.twoStarCount }}</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><label>1 star</label></div>
+                    <div class="col-md-9"><label>{{ data.rating.oneStarCount }}</label></div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+</div>
+
