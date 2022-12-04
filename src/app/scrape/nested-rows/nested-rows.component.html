@@ -1,0 +1,5 @@
+    <tr *ngFor="let key of keys; let i = index;">
+        <th [attr.rowspan]="keySize" *ngIf="i == 0">{{title}}</th>
+        <td>{{ getLabel(key) }}</td>
+        <td>{{ data[key] }}</td>
+    </tr>

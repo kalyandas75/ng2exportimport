@@ -22,6 +22,7 @@
 
     <ng-container *ngIf="data">
         <hr>
+        <button (click)="exportXls()" class="btn btn-primary" style="float: right;">Export to Excel</button>
         <div class="row">
             <div class="col-md-2">
                 <label>Title</label>
@@ -169,6 +170,51 @@
                 </div>
             </div>
         </div>
+
+
+        <table id="productTbl" [hidden]="true">
+            <tr>
+              <th>Product Id</th>
+              <td colspan="2">{{data.productId}}</td>
+            </tr>
+            <tr>
+                <th>Category Id</th>
+                <td colspan="2">{{data.categoryId}}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td colspan="2">{{data.title}}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td colspan="2">{{data.description}}</td>
+            </tr>
+            <app-nested-rows [title]="'Store Info'" [data]="data.store"></app-nested-rows>
+            <tr *ngFor="let s of data.specs; let i=index;">
+                <th [attr.rowspan]="data.specs.length" *ngIf="i == 0">Specifications</th>
+                <td>{{s.attrName}}</td>
+                <td>{{s.attrValue}}</td>
+            </tr>
+            <app-nested-rows [title]="'Quantity'" [data]="data.quantity"></app-nested-rows>
+            <tr>
+                <th rowspan="2">Price</th>
+                <td>Listing Price</td>
+                <td>{{ data.currency }} {{ data.listingPrice.min}} - {{ data.listingPrice.max }}</td>
+            </tr>
+            <tr>
+                <td>Selling Price</td>
+                <td>{{ data.currency }} {{ data.sellingPrice.min}} - {{ data.sellingPrice.max }}</td>
+            </tr>
+
+            <ng-container *ngIf="data.images && data.images.length > 0">
+                <tr *ngFor="let img of data.images; let i = index;">
+                    <th [attr.rowspan]="data.images.length" *ngIf="i==0">Images</th>
+                    <td colspan="2">{{ img }}</td>
+                </tr>
+            </ng-container>
+
+            <app-nested-rows [title]="'Rating'" [data]="data.rating"></app-nested-rows>
+          </table>
     </ng-container>
 
 </div>

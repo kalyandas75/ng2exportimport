@@ -7,11 +7,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SliderModule } from 'angular-image-slider';
+import { NestedRowsComponent } from './scrape/nested-rows/nested-rows.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ScrapeComponent
+    ScrapeComponent,
+    NestedRowsComponent
   ],
   imports: [
     BrowserModule,
